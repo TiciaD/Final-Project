@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UsersController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,17 +25,27 @@ use Illuminate\Support\Facades\Route;
 //     }
 // );
 
-Route::prefix('auth')->group(function () {
-    // current passport key: o8qQJZMxvG1a2n6XpFc06AeZLwlhQt8nFBhdFBuB
+//Route::prefix('auth')->group(function () {
+// current passport key: o8qQJZMxvG1a2n6XpFc06AeZLwlhQt8nFBhdFBuB
 
-    Route::post('/register', [UserController::class, 'register']);
-    // log in user
-    Route::post('/login', [UserController::class, 'signin']);
+Route::post('/register', [UsersController::class, 'register']);
+// log in user
+// Route::post('/login', [UsersController::class, 'signin']);
 
-    Route::group(['middleware' => ['auth:api']], function () {
-        // gets user with all order data
-        Route::get('/user', [UserController::class, 'userData']);
-        // log out user
-        Route::get('/logout', [UserController::class, 'logout']);
-    });
+Route::group(['middleware' => ['auth:api']], function () {
+    // gets user with all order data
+    Route::get('/user', [UsersController::class, 'userData']);
+    // log out user
+    Route::get('/logout', [UsersController::class, 'logout']);
 });
+//});
+
+// Route::middleware('auth:api')->prefix('v1')->group(function () {
+//     Route::get('/user', function (Request $request) {
+//         return $request->user();
+//     });
+//     // Route::get('/users', [UserController::class, 'index']);
+//     Route::get('/login', [UserController::class, 'login']);
+//     Route::get('/logout', [UserController::class, 'logout']);
+//     // Route::apiResource('/users', UserController::class);
+// });
