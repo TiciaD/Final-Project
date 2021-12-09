@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use App\Models\Difficulties;
 
 class DifficultiesSeeder extends Seeder
 {
@@ -14,8 +15,12 @@ class DifficultiesSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('difficulties')->insert([
-            'level' => 'easy',
-        ]);
+        $difficulties = ['easy', 'medium', 'hard'];
+
+        for ($i = 0; $i < count($difficulties); $i++) {
+            $difficulty = new Difficulties;
+            $difficulty->level = $difficulties[$i];
+            $difficulty->save();
+        }
     }
 }

@@ -88,7 +88,11 @@ class UserQuizzesController extends Controller
     public function getUsersQuizzes(Request $request)
     {
         // get all orders from a specific user
-        $usersQuizzes =  UserQuizzes::where('user_id', $request->user()->id)->get();
+        $usersQuizzes =  UserQuizzes::with(['user', 'questions', 'categories', 'difficulties'])->where(
+            'user_id',
+            $request->user()->id
+        )->get();
+
         return response(['data' => $usersQuizzes, 'message' => 'Users Quizzes found successfully!', 'status' => true]);
     }
 }

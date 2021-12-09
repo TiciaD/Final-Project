@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use App\Models\Categories;
 
 class CategoriesSeeder extends Seeder
 {
@@ -14,9 +15,13 @@ class CategoriesSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('categories')->insert([
-            'type' => 'General',
-            'value' => 9
-        ]);
+        $categories = [['General', 9], ['Books', 10]];
+
+        for ($i = 0; $i < count($categories); $i++) {
+            $category = new Categories;
+            $category->type = $categories[$i][0];
+            $category->value = $categories[$i][1];
+            $category->save();
+        }
     }
 }

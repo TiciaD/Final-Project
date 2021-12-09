@@ -26,9 +26,16 @@ class UsersController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function create(Request $request)
     {
-        //
+        //create new user
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => $request->password,
+        ]);
+
+        return $user;
     }
 
     /**
@@ -85,6 +92,7 @@ class UsersController extends Controller
     public function register(Request $request)
     {
         $validator = Validator::make($request->all(), [
+            'username' => 'required|string|min:4',
             'email' => 'nullable|email|max:64|unique:users',
             'password' => 'required|string|min:8',
             // add more validation cases if needed
@@ -100,7 +108,7 @@ class UsersController extends Controller
         $user = User::create($input);
 
         /**Take note of this: Your user authentication access token is generated here **/
-        $data['token'] =  $user->createToken('AincBootcampAPI')->accessToken;
+        $data['token'] =  $user->createToken('userToken')->accessToken;
         // when we register, we also send the user data (you do not need to do this)
         $data['user_data'] = $user;
 
@@ -177,4 +185,10 @@ class UsersController extends Controller
             return response()->json(['error' => 'something went wrong'], 500);
         }
     }
+
+    //     $quizzes = User::find(1)->quizzes;
+
+    // foreach ($quizzes as $quiz) {
+    //     //
+    // };
 }

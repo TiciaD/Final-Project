@@ -18,13 +18,6 @@ use App\Http\Controllers\UserQuizzesController;
 |
 */
 
-// Route::middleware('auth:api')->prefix('v1')->group(
-//     function() {
-//         Route::get('/user', function (Request $request) {
-//             return $request->user;
-//         })
-//     }
-// );
 
 //Route::prefix('auth')->group(function () {
 // current passport key: o8qQJZMxvG1a2n6XpFc06AeZLwlhQt8nFBhdFBuB
@@ -34,7 +27,7 @@ Route::post('/register', [UsersController::class, 'register']);
 // Route::post('/login', [UsersController::class, 'signin']);
 
 Route::group(['middleware' => ['auth:api']], function () {
-    // gets user with all order data
+    // gets user with all user data
     Route::get('/user', [UsersController::class, 'userData']);
     // log out user
     Route::get('/logout', [UsersController::class, 'logout']);
