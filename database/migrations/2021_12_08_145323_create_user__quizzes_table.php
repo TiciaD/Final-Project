@@ -15,11 +15,13 @@ class CreateUserQuizzesTable extends Migration
     {
         Schema::create('user_quizzes', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')
                 ->references('id')
                 ->on('users')
                 ->cascade('delete');
+            $table->timestamps();
         });
     }
 

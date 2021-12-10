@@ -24,6 +24,7 @@ class CreateQuizDifficultiesTable extends Migration
                 ->references('id')
                 ->on('difficulties')
                 ->cascade('delete');
+            $table->timestamps();
         });
     }
 

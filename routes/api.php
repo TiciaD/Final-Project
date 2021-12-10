@@ -32,5 +32,6 @@ Route::group(['middleware' => ['auth:api']], function () {
     // log out user
     Route::get('/logout', [UsersController::class, 'logout']);
     Route::get('/quizzes', [UserQuizzesController::class, 'getUsersQuizzes']);
+    Route::post('/quizzes', [UserQuizzesController::class, 'store']);
 });
 //});

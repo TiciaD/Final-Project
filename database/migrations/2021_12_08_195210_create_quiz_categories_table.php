@@ -24,6 +24,7 @@ class CreateQuizCategoriesTable extends Migration
                 ->references('id')
                 ->on('categories')
                 ->cascade('delete');
+            $table->timestamps();
         });
     }
 
