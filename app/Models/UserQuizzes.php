@@ -28,7 +28,7 @@ class UserQuizzes extends Model
 
     public function questions()
     {
-        return $this->hasOne(QuizQuestions::class, 'quiz_id');
+        return $this->hasMany(QuizQuestions::class, 'quiz_id');
     }
     public function categories()
     {

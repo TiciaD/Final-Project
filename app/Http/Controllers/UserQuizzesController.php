@@ -11,6 +11,7 @@ use App\Models\QuizDifficulties;
 use App\Models\Questions;
 use App\Models\QuizQuestions;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Http\Response;
 
 class UserQuizzesController extends Controller
 {
@@ -44,10 +45,10 @@ class UserQuizzesController extends Controller
     {
         // set user id by using the request and bearer token
         $id = $request->user()->id;
-
+        $input = $request->all();
         // set the quiz header record by using UserQuizzes model
         $quiz = new UserQuizzes;
-        $quiz->name = "name";
+        $quiz->name =  $input['name'];;
         // set the id for the user quiz
         $quiz->user_id = $id;
         // save the UserQuizzes
@@ -55,7 +56,7 @@ class UserQuizzesController extends Controller
         //
         //
         // get the questions from the request
-        $input = $request->all();
+
         $allQues = $input['questions'];
         Log::debug($allQues);
 
@@ -83,22 +84,24 @@ class UserQuizzesController extends Controller
         // add a record with QuizDifficulties model
         $quiz_diff = new QuizDifficulties;
         $quiz_diff->quiz_id = $quiz->id;
-        $quiz_diff->difficulty_id = $diff;
+        $quiz_diff->difficulties_id = $diff;
         $quiz_diff->save();
 
         // add a record with QuizCategories model
         $quiz_cat = new QuizCategories;
         $quiz_cat->quiz_id = $quiz->id;
-        $quiz_cat->category_id = $cat;
+        $quiz_cat->categories_id = $cat;
         $quiz_cat->save();
 
         // return a response that has the user quiz obj and array of quiz questions
+
         $complete_quiz =  UserQuizzes::with(['user', 'questions', 'categories', 'difficulties'])->where(
             'id',
             $quiz->id
         )->get();
 
-        response(['data' => $complete_quiz]);
+        response()->json(['data' => $complete_quiz]);
+        // return Response::json($complete_quiz);
     }
 
     /**
@@ -148,12 +151,20 @@ class UserQuizzesController extends Controller
 
     public function getUsersQuizzes(Request $request)
     {
-        // get all orders from a specific user
+        // get all quizzes from a specific user
         $usersQuizzes =  UserQuizzes::with(['user', 'questions', 'categories', 'difficulties'])->where(
             'user_id',
             $request->user()->id
         )->get();
 
         return response(['data' => $usersQuizzes, 'message' => 'Users Quizzes found successfully!', 'status' => true]);
+    }
+
+    public function getAllQuizzes(Request $request)
+    {
+        // get all quizzes
+        $qs = \App\Models\UserQuizzes::with(['user', 'questions', 'categories', 'difficulties'])->get();
+
+        return response(['data' => $qs, 'message' => 'Users Quizzes found successfully!', 'status' => true]);
     }
 }
