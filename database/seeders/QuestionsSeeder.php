@@ -15,9 +15,9 @@ class QuestionsSeeder extends Seeder
     public function run()
     {
         DB::table('questions')->insert([
-            'question' => 'what is your name',
-            'correct_answer' => 'Bob',
-            'possible_answers' => 'Bob|Bill|Brad|Bono',
+            'question' => 'According to Olympic rules, what number of feathers must a badminton bird (shuttlecock) have?',
+            'correct_answer' => '14',
+            'possible_answers' => '10|15|8|14',
         ]);
     }
 }
