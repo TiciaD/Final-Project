@@ -1,4 +1,5 @@
 <?php
+$DATABASE_URL=parse_url('postgres://wqmoovdrtxamcz:febfaa3120dd5285d35a25243499fd6d94b8b07d29cde21b4c7518fc574893ea@ec2-54-152-28-9.compute-1.amazonaws.com:5432/d4r64bnpqsnfv');
 
 use Illuminate\Support\Str;
 
@@ -65,12 +66,17 @@ return [
 
         'pgsql' => [
             'driver' => 'pgsql',
-            'url' => env('DATABASE_URL'),
-            'host' => env('DB_HOST', '127.0.0.1'),
-            'port' => env('DB_PORT', '5432'),
-            'database' => env('DB_DATABASE', 'forge'),
-            'username' => env('DB_USERNAME', 'forge'),
-            'password' => env('DB_PASSWORD', ''),
+            // 'url' => env('DATABASE_URL'),
+            // 'host' => env('DB_HOST', '127.0.0.1'),
+            'host' => $DATABASE_URL["host"],
+            // 'port' => env('DB_PORT', '5432'),
+            'port' => $DATABASE_URL["port"],
+            // 'database' => env('DB_DATABASE', 'forge'),
+            'database' => ltrim($DATABASE_URL["path"], "/"),
+            // 'username' => env('DB_USERNAME', 'forge'),
+            'username' => $DATABASE_URL["user"],
+            // 'password' => env('DB_PASSWORD', ''),
+            'password' => $DATABASE_URL["pass"],
             'charset' => 'utf8',
             'prefix' => '',
             'prefix_indexes' => true,
