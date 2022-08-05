@@ -93,7 +93,7 @@ class UsersController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'username' => 'required|string|min:4',
-            'email' => 'nullable|email|max:64|unique:users',
+            'email' => 'required|email|max:64|unique:users',
             'password' => 'required|string|min:8',
             // add more validation cases if needed
             // https://laravel.com/docs/8.x/validation
