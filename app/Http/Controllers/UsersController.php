@@ -19,6 +19,8 @@ class UsersController extends Controller
     public function index()
     {
         //
+        $users = User::all();
+        return response([ 'employees' => UserResource::collection($users), 'message' => 'Successful'], 200);
     }
     /**
      * Store a newly created resource in storage.
@@ -28,14 +30,23 @@ class UsersController extends Controller
      */
     public function create(Request $request)
     {
+      $data = $request->all();
         //create new user
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => $request->password,
-        ]);
+        $validator = Validator::make($data, [
+          'username' => 'required|max:255',
+          'email' => 'required|email|unique:users',
+          'password' => 'required|confirmed'
+      ]);
 
-        return $user;
+      if ($validator->fails()) {
+        return response(['error' => $validator->errors(), 
+        'Validation Error']);
+      }
+
+    $user = User::create($data);
+
+    return response([ 'user' => new UserResource($user), 'message' => 'Success'], 200);
+
     }
 
     /**
@@ -47,6 +58,8 @@ class UsersController extends Controller
     public function show(User $user)
     {
         //
+        return response([ 'user' => new 
+        EmployeeResource($employee), 'message' => 'Success'], 200);
     }
 
     /**
