@@ -14,6 +14,7 @@ class CreateQuizCategoriesTable extends Migration
     public function up()
     {
         Schema::create('quiz_categories', function (Blueprint $table) {
+            $table->id();
             $table->unsignedBigInteger('quiz_id');
             $table->foreign('quiz_id')
                 ->references('id')

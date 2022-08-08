@@ -14,7 +14,7 @@ class QuizCategories extends Model
 
     public function quiz()
     {
-        return $this->belongsTo(UserQuizzes::class, 'id', 'quiz_id');
+        return $this->belongsTo(UserQuizzes::class);
     }
     public function category()
     {

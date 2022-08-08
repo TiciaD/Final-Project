@@ -13,6 +13,8 @@ class UserQuizzes extends Model
 {
     use HasFactory;
 
+    // protected $primaryKey = 'user_id';
+
     //protected $with = ['user', 'questions', 'difficulties', 'categories'];
     /**
      * Get the user that owns the quizzes.

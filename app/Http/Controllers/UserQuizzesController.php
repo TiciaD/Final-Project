@@ -48,7 +48,7 @@ class UserQuizzesController extends Controller
         $input = $request->all();
         // set the quiz header record by using UserQuizzes model
         $quiz = new UserQuizzes;
-        $quiz->name =  $input['name'];;
+        $quiz->name = $input['name'];
         // set the id for the user quiz
         $quiz->user_id = $id;
         // save the UserQuizzes
@@ -95,13 +95,13 @@ class UserQuizzesController extends Controller
 
         // return a response that has the user quiz obj and array of quiz questions
 
-        $complete_quiz =  UserQuizzes::with(['user', 'questions', 'categories', 'difficulties'])->where(
-            'id',
+        $complete_quiz = UserQuizzes::with(['user', 'questions', 'categories', 'difficulties'])->where(
+            'user_id',
             $quiz->id
         )->get();
 
         response()->json(['data' => $complete_quiz]);
-        // return Response::json($complete_quiz);
+        return response(['data' => $complete_quiz, 'message' => 'User Quiz submitted successfully!', 'status' => true]);
     }
 
     /**
